@@ -15,19 +15,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var DecrementButton: UIButton!
     @IBOutlet weak var ClearButton: UIButton!
     
-    var count:Int = 0 {
-        didSet {
-            if (count > 999) {
-                count = 999
-            } else if (count < 0) {
-                count = 0
-            }
-        }
-    };
+    var brain: CounterBrain!
     
     override func viewDidLoad() {
+        brain = CounterBrain(initialCount: 10000)
+        CounterLabel.text = "\(brain.count)"
         super.viewDidLoad()
-        CounterLabel.text = "\(count)"
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -42,13 +35,13 @@ class ViewController: UIViewController {
      */
     @IBAction func countButtonClicked(_ sender: UIButton) {
         if (sender.tag == 100) {
-            count = 0
+            brain.clear()
         } else if (sender.tag == 110) {
-            count += 1
+            brain.increment()
         } else if (sender.tag == 120) {
-            count -= 1
+            brain.decrement()
         }
-        CounterLabel.text = "\(count)"
+        CounterLabel.text = "\(brain.count)"
     }
 
 }
